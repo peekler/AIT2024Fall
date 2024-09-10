@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">AITHello</string>
+    <string name="button_show">Show</string>
+    <string name="button_undo">Undo</string>
+    <string name="text_snack">hello snackbar</string>
+    <string name="text_undo_click">undo clicked</string>
 </resources>

@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">AITHello</string>
+    <string name="button_show">Mutasd</string>
+    <string name="button_undo">Vissza</string>
+    <string name="text_snack">hello snackbar</string>
+    <string name="text_undo_click">undo kattintás</string>
+</resources>
