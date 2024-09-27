@@ -8,6 +8,8 @@ import androidx.core.view.WindowInsetsCompat
 import hu.ait.todolayoutinflaterdemo.databinding.ActivityMainBinding
 import hu.ait.todolayoutinflaterdemo.databinding.TodoRowBinding
 
+
+
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
@@ -15,6 +17,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+
 
         enableEdgeToEdge()
 
