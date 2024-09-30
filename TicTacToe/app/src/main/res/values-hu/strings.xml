@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">TicTacToe</string>
+    <string name="btn_reset">Újraindít</string>
+    <string name="text_current_player">Az aktuális játékos: %1$s</string>
+</resources>

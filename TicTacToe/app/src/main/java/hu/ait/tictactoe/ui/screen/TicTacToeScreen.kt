@@ -30,7 +30,9 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.drawText
@@ -54,6 +56,8 @@ fun TicTacToeScreen(
     // Animatable scale for the circle
     val scale = remember { Animatable(1f) }
     val coroutineScope = rememberCoroutineScope()
+    val context = LocalContext.current
+
 
     Column(
         modifier = modifier.fillMaxSize(),
@@ -62,7 +66,8 @@ fun TicTacToeScreen(
     ) {
         // currentPlayer is Player enum that has a name property that prints the enum
         Text(
-            text = "Current Player: ${currentPlayer.name}",
+            text = context.getString(R.string.text_current_player,
+                currentPlayer.name),
             modifier = Modifier.padding(bottom = 16.dp))
 
         TicTacToeBoard(board,
@@ -78,7 +83,7 @@ fun TicTacToeScreen(
                 scale.animateTo(1f)
             }
         }) {
-            Text("Reset")
+            Text(stringResource(R.string.btn_reset))
         }
     }
 }
@@ -95,7 +100,7 @@ fun TicTacToeBoard(
 
     Canvas(
         modifier = Modifier
-            .fillMaxWidth(0.8f)
+            .fillMaxWidth(0.3f)
             .aspectRatio(1.0f) // adjust height to match with the width
             .scale(scale)
             .pointerInput(key1 = Unit) {
