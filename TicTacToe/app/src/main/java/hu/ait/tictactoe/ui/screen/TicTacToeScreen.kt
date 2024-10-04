@@ -100,7 +100,7 @@ fun TicTacToeBoard(
 
     Canvas(
         modifier = Modifier
-            .fillMaxWidth(0.3f)
+            .fillMaxWidth(0.8f)
             .aspectRatio(1.0f) // adjust height to match with the width
             .scale(scale)
             .pointerInput(key1 = Unit) {
