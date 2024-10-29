@@ -41,6 +41,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -54,14 +55,17 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.hilt.navigation.compose.hiltViewModel
 import java.util.Date
 import kotlin.math.exp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TodoListScreen(
-    modifier: Modifier = Modifier, viewModel: TodoViewModel = viewModel()
+    modifier: Modifier = Modifier, viewModel: TodoViewModel = hiltViewModel()
 ) {
+    val todoList by viewModel.getAllToDoList().collectAsState(emptyList())
+
     var showAddDialog by remember { mutableStateOf(false) }
 
     Scaffold(
@@ -90,7 +94,7 @@ fun TodoListScreen(
         Column(modifier = modifier
             .fillMaxSize()
             .padding(innerpadding)) {
-            if (viewModel.getAllToDoList().isEmpty()) {
+            if (todoList.isEmpty()) {
                 Text(
                     "Empty list", modifier = Modifier
                         .fillMaxSize()
@@ -98,9 +102,9 @@ fun TodoListScreen(
                 )
             } else {
                 LazyColumn {
-                    items(viewModel.getAllToDoList()) { todoItem ->
+                    items(todoList) { todoItem ->
                         TodoCard(todoItem,
-                            onTodoDelete = {item -> viewModel.removeTodoItem(item)},
+                            onTodoDelete = {},
                             onTodoChecked = {item, checked -> viewModel.changeTodoState(item, checked)}
                             )
                     }
