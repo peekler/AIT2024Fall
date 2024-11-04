@@ -87,5 +87,4 @@ dependencies {
     androidTestImplementation(libs.hilt.android.testing)
     // Hilt and Robolectric tests.
     testImplementation(libs.hilt.android.testing)
-
 }

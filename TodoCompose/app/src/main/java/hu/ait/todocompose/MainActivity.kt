@@ -16,10 +16,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import dagger.hilt.android.AndroidEntryPoint
+import hu.ait.todocompose.navigation.MainNavigation
+import hu.ait.todocompose.ui.screen.SummaryScreen
 import hu.ait.todocompose.ui.screen.TodoListScreen
 import hu.ait.todocompose.ui.theme.TodoComposeTheme
 
@@ -31,8 +35,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             TodoComposeTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) {
-                    innerPadding ->
+                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     TodoAppNavHost(Modifier.padding(innerPadding))
                 }
             }
@@ -44,10 +47,23 @@ class MainActivity : ComponentActivity() {
 fun TodoAppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = "todolist"
+    startDestination: String = MainNavigation.TodoListScreen.route
 ) {
-    NavHost(navController = navController, startDestination = startDestination
+    NavHost(
+        navController = navController, startDestination = startDestination
     ) {
-        composable("todolist") { TodoListScreen()}
+        composable(MainNavigation.TodoListScreen.route) {
+            TodoListScreen(
+                onNavigateToSummary = { all, important ->
+                    navController.navigate(
+                        MainNavigation.SummaryScreen.createRoute(all, important)
+                    )
+                }
+            )
+        }
+
+        composable(MainNavigation.SummaryScreen.route) {
+            SummaryScreen()
+        }
     }
 }

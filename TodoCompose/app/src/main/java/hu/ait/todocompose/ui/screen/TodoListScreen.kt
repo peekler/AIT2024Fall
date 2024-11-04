@@ -25,6 +25,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Button
@@ -45,6 +47,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
@@ -56,17 +60,27 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
+import hu.ait.todocompose.data.TodoItem
+import hu.ait.todocompose.data.TodoPriority
+import kotlinx.coroutines.launch
 import java.util.Date
 import kotlin.math.exp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TodoListScreen(
-    modifier: Modifier = Modifier, viewModel: TodoViewModel = hiltViewModel()
+    modifier: Modifier = Modifier,
+    viewModel: TodoViewModel = hiltViewModel(),
+    onNavigateToSummary: (Int, Int) -> Unit
 ) {
+    val coroutineScope = rememberCoroutineScope()
+
     val todoList by viewModel.getAllToDoList().collectAsState(emptyList())
 
-    var showAddDialog by remember { mutableStateOf(false) }
+    var showAddDialog by rememberSaveable { mutableStateOf(false) }
+    var todoToEdit: TodoItem? by rememberSaveable {
+        mutableStateOf(null)
+    }
 
     Scaffold(
         topBar = {
@@ -87,6 +101,29 @@ fun TodoListScreen(
                             Icons.Filled.AddCircle, contentDescription = "Add"
                         )
                     }
+                    IconButton(
+                        onClick = {
+                            viewModel.clearAllTodos()
+                        }
+                    ) {
+                        Icon(
+                            Icons.Filled.Delete, contentDescription = "Delete all"
+                        )
+                    }
+
+                    IconButton(
+                        onClick = {
+                            coroutineScope.launch {
+                                val allTodo = viewModel.getAllTodoNum()
+                                val importantTodo = viewModel.getImportantTodoNum()
+                                onNavigateToSummary(allTodo, importantTodo)
+                            }
+                        }
+                    ) {
+                        Icon(
+                            Icons.Filled.Info, contentDescription = "Info"
+                        )
+                    }
                 }
             )
         }
@@ -104,8 +141,16 @@ fun TodoListScreen(
                 LazyColumn {
                     items(todoList) { todoItem ->
                         TodoCard(todoItem,
-                            onTodoDelete = {},
-                            onTodoChecked = {item, checked -> viewModel.changeTodoState(item, checked)}
+                            onTodoDelete = {
+                                item -> viewModel.removeTodoItem(item)
+                            },
+                            onTodoChecked = {item, checked -> viewModel.changeTodoState(item, checked)
+                            },
+                            onTodoEdit = {
+                                item ->
+                                    todoToEdit = item
+                                    showAddDialog = true
+                            }
                             )
                     }
                 }
@@ -115,7 +160,11 @@ fun TodoListScreen(
 
     if (showAddDialog) {
         TodoDialog(viewModel,
-            onCancel = { showAddDialog = false }
+            todoToEdit = todoToEdit,
+            onCancel = {
+                showAddDialog = false
+                todoToEdit = null
+            }
         )
     }
 }
@@ -123,11 +172,22 @@ fun TodoListScreen(
 @Composable
 fun TodoDialog(
     viewModel: TodoViewModel,
+    todoToEdit: TodoItem? = null,
     onCancel: () -> Unit
 ) {
-    var todoTitle by remember { mutableStateOf("") }
-    var todoDesc by remember { mutableStateOf("") }
-    var important by remember { mutableStateOf(false) }
+    var todoTitle by remember { mutableStateOf(
+        todoToEdit?.title ?: ""
+    ) }
+    var todoDesc by remember { mutableStateOf(
+        todoToEdit?.description ?: ""
+    ) }
+    var important by remember { mutableStateOf(
+        if (todoToEdit != null) {
+            todoToEdit.priority == TodoPriority.HIGH
+        } else {
+            false
+        }
+    ) }
 
     Dialog(onDismissRequest = {
         onCancel()
@@ -141,7 +201,7 @@ fun TodoDialog(
             Column(
                 modifier = Modifier.padding(15.dp)
             ) {
-                Text("Add Todo",
+                Text(if (todoToEdit == null) "New Todo" else "Edit Todo",
                     style = MaterialTheme.typography.titleMedium)
 
                 OutlinedTextField(modifier = Modifier.fillMaxWidth(),
@@ -165,20 +225,28 @@ fun TodoDialog(
                     horizontalArrangement = Arrangement.End
                 ) {
                     TextButton(onClick = {
-                        viewModel.addTodoList(
-                            TodoItem(
-                                id = "",
+                        if (todoToEdit == null) {
+                            viewModel.addTodoList(
+                                TodoItem(
+                                    title = todoTitle,
+                                    description = todoDesc,
+                                    createDate = Date(System.currentTimeMillis()).toString(),
+                                    priority = if (important) TodoPriority.HIGH else TodoPriority.NORMAL,
+                                    isDone = false
+                                )
+                            )
+                        } else {
+                            val editedTodo = todoToEdit.copy(
                                 title = todoTitle,
                                 description = todoDesc,
-                                createDate = Date(System.currentTimeMillis()).toString(),
-                                priority = if (important) TodoPriority.HIGH else TodoPriority.NORMAL,
-                                isDone = false
+                                priority = if (important) TodoPriority.HIGH else TodoPriority.NORMAL
                             )
-                        )
+                            viewModel.editTodoItem(editedTodo)
+                        }
 
                         onCancel()
                     }) {
-                        Text("Add todo")
+                        Text("Save")
                     }
                 }
             }
@@ -190,7 +258,8 @@ fun TodoDialog(
 @Composable
 fun TodoCard(todoItem: TodoItem,
              onTodoDelete: (TodoItem) -> Unit,
-             onTodoChecked: (TodoItem, checked: Boolean) -> Unit
+             onTodoChecked: (TodoItem, checked: Boolean) -> Unit,
+             onTodoEdit: (TodoItem) -> Unit
              ) {
     Card(
         colors = CardDefaults.cardColors(
@@ -250,6 +319,16 @@ fun TodoCard(todoItem: TodoItem,
                         },
                         tint = Color.Red
                     )
+
+                    Icon(
+                        imageVector = Icons.Filled.Edit,
+                        contentDescription = "Edit",
+                        modifier = Modifier.clickable {
+                            onTodoEdit(todoItem)
+                        },
+                        tint = Color.Gray
+                    )
+
                     IconButton(onClick = { expanded = !expanded }) {
                         Icon(
                             imageVector = if (expanded) Icons.Filled.KeyboardArrowUp
