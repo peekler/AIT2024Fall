@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "888491074505",
+    "project_id": "aitforum2024demo",
+    "storage_bucket": "aitforum2024demo.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:888491074505:android:165a3f1afdf4b41bba7e18",
+        "android_client_info": {
+          "package_name": "hu.bme.aut.aitforum"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDK-s_jjjJcG3VAhS0I9TkOeb6Pc2E-0VA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
