@@ -1,4 +1,4 @@
-package hu.bme.aut.aitforum.ui.screen
+package hu.bme.aut.aitforum.ui.screen.login
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -30,10 +30,13 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun LoginScreen(modifier: Modifier = Modifier,
-                viewModel: LoginViewModel = viewModel() ) {
+                viewModel: LoginViewModel = viewModel(),
+                onLoginSuccess: () -> Unit = {}
+                ) {
     var showPassword by rememberSaveable { mutableStateOf(false) }
     var email by rememberSaveable { mutableStateOf("peter@ait.hu") }
     var password by rememberSaveable { mutableStateOf("123456") }
@@ -94,7 +97,13 @@ fun LoginScreen(modifier: Modifier = Modifier,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 OutlinedButton(onClick = {
-                    //
+                    coroutineScope.launch {
+                        val result = viewModel.loginUser(email, password)
+                        if (result?.user != null) {
+                            // navigate to messages screen...
+                            onLoginSuccess()
+                        }
+                    }
                 }) {
                     Text(text = "Login")
                 }
