@@ -2,10 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-
-    <uses-feature android:name="android.hardware.camera" android:required="true" />
+    <uses-feature android:name="android.hardware.camera" android:required="true"/>
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
     <application
         android:allowBackup="true"
@@ -15,13 +14,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AITForum"
+        android:theme="@style/Theme.ComposeCameraPermissionHandlingDemo"
         tools:targetApi="31">
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.AITForum">
+            android:theme="@style/Theme.ComposeCameraPermissionHandlingDemo">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,16 +29,14 @@
         </activity>
 
         <provider
-            android:name=".ui.screen.writemessage.ComposeFileProvider"
-            android:authorities=
-                "hu.bme.aut.aitforum.fileprovider"
+            android:name=".ui.screen.ComposeFileProvider"
+            android:authorities="hu.bme.aut.composecamerapermissionhandlingdemo.fileprovider"
             android:grantUriPermissions="true"
             android:exported="false">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths" />
         </provider>
-
 
     </application>
 

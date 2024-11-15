@@ -97,6 +97,8 @@ fun LoginScreen(modifier: Modifier = Modifier,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 OutlinedButton(onClick = {
+                    //throw RuntimeException("Test Crash") // Force a crash
+
                     coroutineScope.launch {
                         val result = viewModel.loginUser(email, password)
                         if (result?.user != null) {

@@ -13,8 +13,17 @@ firebaseAuth = "23.1.0"
 navigationRuntimeKtx = "2.7.7"
 navigationCompose = "2.7.7"
 firebaseFirestore = "25.1.1"
+accompanist="0.33.2-alpha"
+coil="2.1.0"
+firebaseStorage = "21.0.1"
+zoomable="1.6.2"
+firebaseCrashlytics = "19.2.1"
+googleFirebaseCrashlytics = "3.0.2"
 
 [libraries]
+zoomable = {group = "net.engawapg.lib", name = "zoomable", version.ref="zoomable"}
+coil = {group = "com.google.accompanist", name = "accompanist-permissions", version.ref="accompanist"}
+accompanist = {group = "io.coil-kt", name = "coil-compose", version.ref="coil"}
 androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigationRuntimeKtx" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -33,10 +42,13 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
+firebase-storage = { group = "com.google.firebase", name = "firebase-storage", version.ref = "firebaseStorage" }
+firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics", version.ref = "firebaseCrashlytics" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
+google-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "googleFirebaseCrashlytics" }
 
