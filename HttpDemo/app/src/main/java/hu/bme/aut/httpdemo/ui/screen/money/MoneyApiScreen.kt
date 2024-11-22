@@ -20,6 +20,7 @@ fun MoneyApiScreen(
             Text(text = "Refresh")
         }
         when (moneyViewModel.moneyUiState) {
+            is MoneyUiState.Init -> Text("Press refresh to do something...")
             is MoneyUiState.Loading -> CircularProgressIndicator()
             is MoneyUiState.Success -> MoneyResultScreen(
                 (moneyViewModel.moneyUiState as MoneyUiState.Success).moneyRates)

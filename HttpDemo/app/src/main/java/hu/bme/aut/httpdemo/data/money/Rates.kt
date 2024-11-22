@@ -29,7 +29,7 @@ data class Rates(
     @SerialName("BAM")
     var bAM: Double? = null,
     @SerialName("BBD")
-    var bBD: Int? = null,
+    var bBD: Double? = null,
     @SerialName("BDT")
     var bDT: Double? = null,
     @SerialName("BGN")
@@ -39,7 +39,7 @@ data class Rates(
     @SerialName("BIF")
     var bIF: Double? = null,
     @SerialName("BMD")
-    var bMD: Int? = null,
+    var bMD: Double? = null,
     @SerialName("BND")
     var bND: Double? = null,
     @SerialName("BOB")
@@ -47,7 +47,7 @@ data class Rates(
     @SerialName("BRL")
     var bRL: Double? = null,
     @SerialName("BSD")
-    var bSD: Int? = null,
+    var bSD: Double? = null,
     @SerialName("BTN")
     var bTN: Double? = null,
     @SerialName("BWP")
@@ -55,7 +55,7 @@ data class Rates(
     @SerialName("BYN")
     var bYN: Double? = null,
     @SerialName("BZD")
-    var bZD: Int? = null,
+    var bZD: Double? = null,
     @SerialName("CAD")
     var cAD: Double? = null,
     @SerialName("CDF")
@@ -71,7 +71,7 @@ data class Rates(
     @SerialName("CRC")
     var cRC: Double? = null,
     @SerialName("CUP")
-    var cUP: Int? = null,
+    var cUP: Double? = null,
     @SerialName("CVE")
     var cVE: Double? = null,
     @SerialName("CZK")
@@ -87,7 +87,7 @@ data class Rates(
     @SerialName("EGP")
     var eGP: Double? = null,
     @SerialName("ERN")
-    var eRN: Int? = null,
+    var eRN: Double? = null,
     @SerialName("ETB")
     var eTB: Double? = null,
     @SerialName("EUR")
@@ -105,7 +105,7 @@ data class Rates(
     @SerialName("GGP")
     var gGP: Double? = null,
     @SerialName("GHS")
-    var gHS: Int? = null,
+    var gHS: Double? = null,
     @SerialName("GIP")
     var gIP: Double? = null,
     @SerialName("GMD")
@@ -169,7 +169,7 @@ data class Rates(
     @SerialName("LAK")
     var lAK: Double? = null,
     @SerialName("LBP")
-    var lBP: Int? = null,
+    var lBP: Double? = null,
     @SerialName("LKR")
     var lKR: Double? = null,
     @SerialName("LRD")
@@ -221,7 +221,7 @@ data class Rates(
     @SerialName("OMR")
     var oMR: Double? = null,
     @SerialName("PAB")
-    var pAB: Int? = null,
+    var pAB: Double? = null,
     @SerialName("PEN")
     var pEN: Double? = null,
     @SerialName("PGK")
@@ -299,7 +299,7 @@ data class Rates(
     @SerialName("UGX")
     var uGX: Double? = null,
     @SerialName("USD")
-    var uSD: Int? = null,
+    var uSD: Double? = null,
     @SerialName("UYU")
     var uYU: Double? = null,
     @SerialName("UZS")

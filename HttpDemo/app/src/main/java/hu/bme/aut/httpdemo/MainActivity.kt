@@ -20,6 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import hu.bme.aut.httpdemo.ui.navigation.Screen
 import hu.bme.aut.httpdemo.ui.screen.MainScreen
 import hu.bme.aut.httpdemo.ui.screen.money.MoneyApiScreen
+import hu.bme.aut.httpdemo.ui.screen.nasa.NasaMarsApiScreen
 import hu.bme.aut.httpdemo.ui.theme.HttpDemoTheme
 
 @AndroidEntryPoint
@@ -59,7 +60,7 @@ fun NavGraph(
             MoneyApiScreen()
         }
         composable(Screen.NasaMarsAPI.route) {
-            //NasaMarsApiScreen()
+            NasaMarsApiScreen()
         }
     }
 }

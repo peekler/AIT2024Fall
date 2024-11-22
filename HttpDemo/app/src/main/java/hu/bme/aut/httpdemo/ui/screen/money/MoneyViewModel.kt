@@ -17,7 +17,7 @@ import javax.inject.Inject
 class MoneyViewModel @Inject constructor(
     val moneyAPI: MoneyAPI
 ) : ViewModel() {
-    var moneyUiState: MoneyUiState by mutableStateOf(MoneyUiState.Loading)
+    var moneyUiState: MoneyUiState by mutableStateOf(MoneyUiState.Init)
 
     fun getRates() {
         moneyUiState = MoneyUiState.Loading
@@ -37,6 +37,7 @@ class MoneyViewModel @Inject constructor(
 }
 
 sealed interface MoneyUiState {
+    object Init : MoneyUiState
     data class Success(val moneyRates: MoneyResult) : MoneyUiState
     object Error : MoneyUiState
     object Loading : MoneyUiState
