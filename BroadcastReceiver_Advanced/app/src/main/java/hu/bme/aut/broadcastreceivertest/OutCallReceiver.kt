@@ -13,8 +13,8 @@ class OutCallReceiver : BroadcastReceiver() {
 
         //this.resultData = "1001"
 
-        /*var intent = Intent(context, MainActivity::class.java)
+        var intent = Intent(context, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        context.startActivity(intent)*/
+        context.startActivity(intent)
     }
 }

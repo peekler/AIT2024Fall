@@ -22,6 +22,7 @@
             </intent-filter>
         </activity>
 
+
         <receiver android:name=".SMSReceiver">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
