@@ -18,9 +18,9 @@ fun IntentScreen() {
         Button(onClick = {
             //intentSearch(context)
             //intentCall(context)
-            intentSend(context)
+            //intentSend(context)
             //intentWaze(context)
-            //intentStreetMaps(context)
+            intentStreetMaps(context)
         }) {
             Text(text = "Intent start")
         }
@@ -34,8 +34,8 @@ fun intentSearch(context: Context) {
 }
 
 private fun intentCall(context: Context) {
-    val intentCall = Intent(Intent.ACTION_DIAL,
-        Uri.parse("tel:+361234567")
+    val intentCall = Intent(Intent.ACTION_CALL,
+        Uri.parse("tel:+361131232")
     )
     context.startActivity(intentCall)
 }
@@ -43,7 +43,7 @@ private fun intentCall(context: Context) {
 private fun intentSend(context: Context) {
     val intentSend = Intent(Intent.ACTION_SEND)
     intentSend.type = "text/plain"
-    //intentSend.`package` = "com.facebook.katana"
+    intentSend.`package` = "com.facebook.katana"
     intentSend.putExtra(Intent.EXTRA_TEXT, "Share demo")
     context.startActivity(intentSend)
     //startActivity(Intent.createChooser(intentSend, "Select share app"));
@@ -53,7 +53,7 @@ private fun intentSend(context: Context) {
 private fun intentWaze(context: Context) {
     //String wazeUri = "waze://?favorite=Home&navigate=yes";
     //val wazeUri = "waze://?ll=40.761043, -73.980545&navigate=yes"
-    val wazeUri = "waze://?q=BME&navigate=yes"
+    val wazeUri = "waze://?q=AIT+Budapest&navigate=yes"
     val intentTest = Intent(Intent.ACTION_VIEW)
     intentTest.data = Uri.parse(wazeUri)
     context.startActivity(intentTest)

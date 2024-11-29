@@ -150,6 +150,7 @@ fun MapsScreen(
                     .build()
 
 
+
                 coroutineScope.launch {
                     cameraState.animate(
                         CameraUpdateFactory.newCameraPosition(cameraPosition),
