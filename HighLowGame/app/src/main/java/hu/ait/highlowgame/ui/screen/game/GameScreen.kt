@@ -86,6 +86,8 @@ fun GameScreen(modifier: Modifier = Modifier,
 
         Button(
             onClick = {
+                //
+
                 if (myNumber.toInt() == viewModel.generatedNum) {
                     resultText = "Well done, you won!"
                     viewModel.generateRandomNumber()
